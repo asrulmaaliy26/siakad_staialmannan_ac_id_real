@@ -73,6 +73,7 @@ class MahasiswaModel extends Model
 
     private function getDatatablesQuery()
     {
+        $this->dt = $this->table($this->table);
         if($this->request->getVar('prodi'))
         {
             $this->dt->where('h.Prodi', $this->request->getVar('prodi'));
@@ -110,7 +111,7 @@ class MahasiswaModel extends Model
         $this->dt->where('h.status', 'A');
         $this->dt->select('db_data_diri_mahasiswa.id, db_data_diri_mahasiswa.th_angkatan, db_data_diri_mahasiswa.th_masuk, db_data_diri_mahasiswa.stat_mhs, db_data_diri_mahasiswa.kelas, db_data_diri_mahasiswa.smt_aktif, db_data_diri_mahasiswa.Nama_Lengkap, db_data_diri_mahasiswa.No_Pendaftaran, h.NIM, h.NIMKO, h.Prodi, h.Program, h.Kelas as kls, h.id_his_pdk, h.jns_daftar');
         $this->dt->join('histori_pddk as h','h.id_data_diri = db_data_diri_mahasiswa.id','inner');
-        $this->dt->groupBy('db_data_diri_mahasiswa.id');
+        //$this->dt->groupBy('db_data_diri_mahasiswa.id');
 
         $i = 0;
         foreach ($this->column_search as $item) {
@@ -152,7 +153,6 @@ class MahasiswaModel extends Model
 
     public function countAll()
     {
-        $tbl_storage = $this->dt->table($this->table);
-        return $tbl_storage->countAllResults();
+        return $this->db->table($this->table)->countAllResults();
     }
 }

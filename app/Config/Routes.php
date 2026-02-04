@@ -227,6 +227,7 @@ $routes->group('instrument_akreditasi',['namespace' => 'App\Controllers\Admin\Ak
     $routes->add('(:any)','Instrument_akreditasi::$1');
     $routes->add('(:any)/(:any)','Instrument_akreditasi::$1/$2');
 });
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing
@@ -240,6 +241,12 @@ $routes->group('instrument_akreditasi',['namespace' => 'App\Controllers\Admin\Ak
  * You will have access to the $routes object within that file without
  * needing to reload it.
  */
+
+$routes->group('api', ['namespace' => 'App\Controllers\Api'], function($routes){
+    $routes->post('violations/save', 'Violations::save');
+    $routes->options('violations/save', 'Violations::save');
+});
+
 if (is_file(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php')) {
     require APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php';
 }

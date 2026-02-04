@@ -60,6 +60,8 @@ class PerkuliahanModel extends Model
 
     private function getDatatablesQuery()
     {
+        $this->dt = $this->db->table($this->table);
+
         if($this->request->getVar('tahun_akademik'))
         {
             $this->dt->where('mata_kuliah.Kd_Tahun', $this->request->getVar('tahun_akademik'));
@@ -107,8 +109,8 @@ class PerkuliahanModel extends Model
             $this->dt->whereIn('Prodi', $prodi);
         }
         $this->dt->where('mata_kuliah.kd_kelas_perkuliahan !=', NULL);
-        $this->dt->groupBy('mata_kuliah.kd_kelas_perkuliahan');
-        
+        // $this->dt->groupBy('mata_kuliah.kd_kelas_perkuliahan');
+        $this->dt->distinct();
         
         $this->dt->select('mata_kuliah.kd_kelas_perkuliahan, mata_kuliah.Mata_Kuliah, mata_kuliah.SKS, mata_kuliah.SMT, mata_kuliah.H_Jadwal, mata_kuliah.Jam_Jadwal, mata_kuliah.R_Jadwal, 
                             mata_kuliah.Pelaksanaan, mata_kuliah.Kd_Dosen, data_dosen.Nama_Dosen');
@@ -154,7 +156,7 @@ class PerkuliahanModel extends Model
 
     public function countAll()
     {
-        $tbl_storage = $this->dt->table($this->table);
+        $tbl_storage = $this->db->table($this->table);
         return $tbl_storage->countAllResults();
     }
     

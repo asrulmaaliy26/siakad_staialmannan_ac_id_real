@@ -61,6 +61,8 @@ class HistoriPddkModel extends Model
 
     private function getDatatablesQuery()
     {
+        $this->dt = $this->db->table($this->table);
+
         if($this->request->getVar('id_data_diri'))
         {
             $this->dt->where('id_data_diri', $this->request->getVar('id_data_diri'));
@@ -132,7 +134,7 @@ class HistoriPddkModel extends Model
 
     public function countAll()
     {
-        $tbl_storage = $this->dt->table($this->table);
+        $tbl_storage = $this->db->table($this->table);
         return $tbl_storage->countAllResults();
     }
     

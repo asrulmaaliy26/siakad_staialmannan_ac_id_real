@@ -204,6 +204,7 @@ function cmb_dinamis($name, $table, $field, $pk, $selected=null, $class=null, $e
 {
 	$db      = \Config\Database::connect('default');
 	$builder = $db->table($table);
+    $builder->select("$pk, $field");
 	if(isset($group_by)){
 		$builder->groupBy($group_by);
 	}
@@ -256,6 +257,8 @@ function getDataRow($table, $where=null, $groupBy=null, $select=null, $limit=nul
     $builder = $db->table($table);
     if($select){
         $builder->select($select);
+    } else if($groupBy) {
+        $builder->select($groupBy);
     }
     if($where){
         $builder->where($where);

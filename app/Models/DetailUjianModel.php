@@ -59,6 +59,14 @@ class DetailUjianModel extends Model
 
     private function getDatatablesQuery()
     {
+        $this->dt = $this->db->table($this->table);
+        
+        // The instruction mentioned "Reset query builder", which is already handled by the line above.
+        // The provided snippet `if($this->request->getVar('id_data_diri'))ble($this->table);`
+        // appears to be a malformed or incomplete instruction.
+        // Assuming the intent was to add a condition for 'id_data_diri' if it were relevant to this model,
+        // but since it's not, and the snippet is broken, I will ignore that specific broken line.
+
         if($this->request->getVar('tahun_akademik'))
         {
             $this->dt->where('mata_kuliah.Kd_Tahun', $this->request->getVar('tahun_akademik'));
@@ -120,7 +128,8 @@ class DetailUjianModel extends Model
             $this->dt->whereIn('Prodi', $prodi);
         }
         $this->dt->where('mata_kuliah.kd_kelas_perkuliahan !=', NULL);
-        $this->dt->groupBy('mata_kuliah.kd_kelas_perkuliahan');
+        // $this->dt->groupBy('mata_kuliah.kd_kelas_perkuliahan');
+        $this->dt->distinct();
         
         
         $this->dt->select('mata_kuliah.kd_kelas_perkuliahan, mata_kuliah.Mata_Kuliah, mata_kuliah.SMT, mata_kuliah.Hari, mata_kuliah.Tgl, mata_kuliah.Bln, mata_kuliah.Thn, mata_kuliah.Jam, mata_kuliah.Pengawas_1, mata_kuliah.Ruang, mata_kuliah.jns_uas,
@@ -168,7 +177,7 @@ class DetailUjianModel extends Model
 
     public function countAll()
     {
-        $tbl_storage = $this->dt->table($this->table);
+        $tbl_storage = $this->db->table($this->table);
         return $tbl_storage->countAllResults();
     }
     

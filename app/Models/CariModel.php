@@ -22,6 +22,7 @@ class CariModel extends Model
             $builder->where($where_field, $where_val);
         }
         if($groupBy){
+            $builder->select($groupBy);
             $builder->groupBy($groupBy);
         }
         $query = $builder->get();
@@ -44,6 +45,8 @@ class CariModel extends Model
         $builder = $this->db->table($table);
         if($select){
             $builder->select($select);
+        } else if($groupBy) {
+            $builder->select($groupBy);
         }
         if($where){
             $builder->where($where);
@@ -75,6 +78,8 @@ class CariModel extends Model
         $builder = $this->db->table($table);
         if($select){
             $builder->select($select);
+        } else if($groupBy) {
+            $builder->select($groupBy);
         }
         if($where){
             $builder->where($where);

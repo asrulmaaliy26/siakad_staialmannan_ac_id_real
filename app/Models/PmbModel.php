@@ -87,6 +87,8 @@ class PmbModel extends Model
 
     private function getDatatablesQuery()
     {
+        $this->dt = $this->db->table($this->table);
+
         if($this->request->getVar('prodi'))
         {
             $this->dt->where('db_pmb.Prodi_Pilihan_1', $this->request->getVar('prodi'));
@@ -163,7 +165,7 @@ class PmbModel extends Model
     }
     public function countAll()
     {
-        $tbl_storage = $this->dt->table($this->table);
+        $tbl_storage = $this->db->table($this->table);
         return $tbl_storage->countAllResults();
     }
     
