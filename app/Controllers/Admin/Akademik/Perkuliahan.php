@@ -891,58 +891,11 @@ class Perkuliahan extends BaseController
 
         $data['qrcode'] = $result->getDataUri();
 
+        //$html = view(session()->get('akun_group_folder')."/akademik/$this->halaman_controller/".$data['metode'],["data" => $data]);
         $html_cover = view(session()->get('akun_group_folder') . "/akademik/$this->halaman_controller/" . $data['metode'] . "/cover", ["data" => $data]);
         $html_absen = view(session()->get('akun_group_folder') . "/akademik/$this->halaman_controller/" . $data['metode'] . "/absen", ["data" => $data]);
         $html_jurnal = view(session()->get('akun_group_folder') . "/akademik/$this->halaman_controller/" . $data['metode'] . "/jurnal", ["data" => $data]);
-
-        $stylesheet = file_get_contents('./assets/mpdfstyletables.css');
-
-        $data['html_preview'] =
-            "<style>$stylesheet</style>" .
-
-            "<div style='color:#6495ED;font-size:6pt'>
-        " . base_url("akademik/$this->halaman_controller/cetakAbsensiKosong?prodi=")
-            . $prodi . "&kelas=" . $kelas . "&kd_kelas_perkuliahan=" . $kd_kelas_perkuliahan . "
-    </div>" .
-
-            $html_cover .
-
-            "<div style='page-break-after:always'></div>" .
-
-            $html_absen .
-
-            "<div style='page-break-after:always'></div>" .
-
-            $html_jurnal;
-
-        return view('preview_pdf_absensi', $data);
-
-        // $mpdf = new \Mpdf\Mpdf([
-        //     'mode' => 'utf-8',
-        //     'format' => 'A4-L',
-        //     'margin_left' => 30,
-        //     'margin_right' => 30,
-        //     'margin_top' => 25,
-        //     'margin_bottom' => 20,
-        // ]);
-
-        // //$html = view(session()->get('akun_group_folder')."/akademik/$this->halaman_controller/".$data['metode'],["data" => $data]);
-        // $html_cover = view(session()->get('akun_group_folder') . "/akademik/$this->halaman_controller/" . $data['metode'] . "/cover", ["data" => $data]);
-        // $html_absen = view(session()->get('akun_group_folder') . "/akademik/$this->halaman_controller/" . $data['metode'] . "/absen", ["data" => $data]);
-        // $html_jurnal = view(session()->get('akun_group_folder') . "/akademik/$this->halaman_controller/" . $data['metode'] . "/jurnal", ["data" => $data]);
-        // $output = "Absensi_" . $prodi . "_" . $kelas . ".pdf";
-        // $stylesheet = file_get_contents('./assets/mpdfstyletables.css');
-        // $mpdf->defaultheaderline = 0;
-        // $mpdf->SetHeader("<div style='color: #6495ED;font-size: 6pt;'>" . base_url("akademik/$this->halaman_controller/cetakAbsensiKosong?prodi=") . $prodi . "&kelas=" . $kelas . "&kd_kelas_perkuliahan=" . $kd_kelas_perkuliahan . "</div>");
-        // $mpdf->WriteHTML($stylesheet, 1); // The parameter 1 tells that this is css/style only and no body/html/text
-        // $mpdf->WriteHTML($html_cover);
-        // $mpdf->WriteHTML('<pagebreak margin-left="10mm" margin-right="10mm" margin-top="15mm" margin-bottom="10mm" />');
-        // $mpdf->WriteHTML($stylesheet, 1); // The parameter 1 tells that this is css/style only and no body/html/text
-        // $mpdf->WriteHTML($html_absen);
-        // $mpdf->WriteHTML('<pagebreak orientation="portrait" margin-left="20mm" margin-right="20mm" margin-top="15mm" margin-bottom="30mm" />');
-        // $mpdf->WriteHTML($html_jurnal);
-        // $this->response->setHeader('Content-Type', 'application/pdf');
-        // $mpdf->Output($output, 'I');
+        return $html_cover . $html_absen . $html_jurnal;
     }
 
     function absensiMhs()
