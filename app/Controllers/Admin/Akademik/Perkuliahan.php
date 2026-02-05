@@ -57,7 +57,7 @@ class Perkuliahan extends BaseController
         $data['templateJudul'] = $this->halaman_label;
         $data['controller'] = $this->halaman_controller;
         $data['aktif_menu'] = $this->halaman_controller;
-        $data['metode']    = 'index';
+        $data['metode'] = 'index';
         return view(session()->get('akun_group_folder') . "/akademik/$this->halaman_controller/" . $data['metode'], $data);
     }
 
@@ -274,13 +274,13 @@ class Perkuliahan extends BaseController
             if (!$this->validate($aturan)) {
                 echo json_encode(array("msg" => "warning", "validation" => $this->validation->getErrors(), "pesan" => "Data periksa kembali form!!"));
             } else {
-                $jmlSukses          = 0;
-                $jmlError           = 0;
-                $listError          = [];
-                $Kd_Dosen           = $this->request->getVar('dosen');
-                $Kd_hari            = getDataRow('ref_option', ['opt_group' => 'hari', 'opt_val' => $this->request->getVar('H_Jadwal'), 'is_aktif' => 'Y'])['opt_id'];
-                $Kd_jam            = getDataRow('ref_option', ['opt_group' => 'jam_kuliah', 'opt_val' => $this->request->getVar('jam'), 'is_aktif' => 'Y'])['opt_id'];
-                $Kd_ruang            = $this->request->getVar('ruang_kuliah');
+                $jmlSukses = 0;
+                $jmlError = 0;
+                $listError = [];
+                $Kd_Dosen = $this->request->getVar('dosen');
+                $Kd_hari = getDataRow('ref_option', ['opt_group' => 'hari', 'opt_val' => $this->request->getVar('H_Jadwal'), 'is_aktif' => 'Y'])['opt_id'];
+                $Kd_jam = getDataRow('ref_option', ['opt_group' => 'jam_kuliah', 'opt_val' => $this->request->getVar('jam'), 'is_aktif' => 'Y'])['opt_id'];
+                $Kd_ruang = $this->request->getVar('ruang_kuliah');
                 foreach ($this->request->getVar('id_distribusi_mk') as $key) {
                     $dtMk = getDataRow('mata_kuliah', ['id' => $key]);
                     $record = [
@@ -298,9 +298,10 @@ class Perkuliahan extends BaseController
                     } else {
                         $jmlError++;
                         $listError[] = [
-                            'pesan'     => $dtMk['Mata_Kuliah'] . " " . $dtMk['Prodi'] . " " . $dtMk['Kelas'] . " gagal diupdate."
+                            'pesan' => $dtMk['Mata_Kuliah'] . " " . $dtMk['Prodi'] . " " . $dtMk['Kelas'] . " gagal diupdate."
                         ];
-                    };
+                    }
+                    ;
                 }
                 if ($jmlError > 0) {
                     return json_encode(array("msg" => "info", "pesan" => $jmlSukses . " Matakuliah berhasil diupdate, " . $jmlError . " gagal diupdate.", 'listError' => $listError));
@@ -315,7 +316,7 @@ class Perkuliahan extends BaseController
     {
 
         $list_id = $this->request->getVar('id');
-        $data                 = [];
+        $data = [];
         //$index 				= 0;
         foreach ($list_id as $id) {
             $mk = getDataRow('mata_kuliah', ['kd_kelas_perkuliahan' => $id]);
@@ -357,10 +358,10 @@ class Perkuliahan extends BaseController
                 'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER // Set text jadi di tengah secara vertical (middle)
             ],
             'borders' => [
-                'top' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN], // Set border top dengan garis tipis
-                'right' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],  // Set border right dengan garis tipis
-                'bottom' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN], // Set border bottom dengan garis tipis
-                'left' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN] // Set border left dengan garis tipis
+                'top' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN], // Set border top dengan garis tipis
+                'right' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],  // Set border right dengan garis tipis
+                'bottom' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN], // Set border bottom dengan garis tipis
+                'left' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN] // Set border left dengan garis tipis
             ]
         ];
         // Buat sebuah variabel untuk menampung pengaturan style dari isi tabel
@@ -369,10 +370,10 @@ class Perkuliahan extends BaseController
                 'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER // Set text jadi di tengah secara vertical (middle)
             ],
             'borders' => [
-                'top' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN], // Set border top dengan garis tipis
-                'right' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],  // Set border right dengan garis tipis
-                'bottom' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN], // Set border bottom dengan garis tipis
-                'left' => ['borderStyle'  => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN] // Set border left dengan garis tipis
+                'top' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN], // Set border top dengan garis tipis
+                'right' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN],  // Set border right dengan garis tipis
+                'bottom' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN], // Set border bottom dengan garis tipis
+                'left' => ['borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN] // Set border left dengan garis tipis
             ]
         ];
 
@@ -486,7 +487,7 @@ class Perkuliahan extends BaseController
         $xlsData = ob_get_contents();
         ob_end_clean();
 
-        $response =  array(
+        $response = array(
             'nama_file' => $filename . '.xlsx',
             'op' => 'ok',
             'file' => "data:application/vnd.ms-excel;base64," . base64_encode($xlsData)
@@ -509,7 +510,7 @@ class Perkuliahan extends BaseController
         $data['templateJudul'] = $this->halaman_label;
         $data['controller'] = $this->halaman_controller;
         $data['aktif_menu'] = $this->halaman_controller;
-        $data['metode']    = 'detail';
+        $data['metode'] = 'detail';
 
         return view(session()->get('akun_group_folder') . "/akademik/$this->halaman_controller/" . $data['metode'], $data);
     }
@@ -638,7 +639,7 @@ class Perkuliahan extends BaseController
                 ->findAll();
 
             $kode_kelas = array_column($dataMk, 'kode_kelas');
-            $id_mk     = array_column($dataMk, 'id');
+            $id_mk = array_column($dataMk, 'id');
 
             $listsMhsKrs = $krsModel->select('id_his_pdk')->whereIn('kode_kelas', $kode_kelas)->findAll();
             $listsMhsLjk = $NilaiModel->select('id_his_pdk')->whereIn('id_mk', $id_mk)->findAll();
@@ -668,7 +669,7 @@ class Perkuliahan extends BaseController
             $list_baru = array_values($list_baru);
 
             $data = [];
-            $no   = $this->request->getPost('start');
+            $no = $this->request->getPost('start');
 
             foreach ($list_baru as $list) {
                 $histori = getDataRow('histori_pddk', ['id_his_pdk' => $list['id_his_pdk']]);
@@ -692,8 +693,8 @@ class Perkuliahan extends BaseController
                     log_message('warning', 'Data db_data_diri_mahasiswa tidak ditemukan untuk id: ' . $id_data_diri);
                 }
 
-                $th_angkatan  = $mahasiswa['th_angkatan'] ?? '-';
-                $namaLengkap  = strtoupper($mahasiswa['Nama_Lengkap'] ?? '-');
+                $th_angkatan = $mahasiswa['th_angkatan'] ?? '-';
+                $namaLengkap = strtoupper($mahasiswa['Nama_Lengkap'] ?? '-');
 
                 $no++;
                 $row = [];
@@ -711,7 +712,7 @@ class Perkuliahan extends BaseController
                 } else {
                     $kosmaRow = getDataRow('tb_kosma_kelas_perkuliahan', [
                         'kd_kelas_perkuliahan' => $kd_kelas_perkuliahan,
-                        'id_his_pdk'          => $list['id_his_pdk']
+                        'id_his_pdk' => $list['id_his_pdk']
                     ]);
 
                     if (empty($kosmaRow)) {
@@ -728,7 +729,7 @@ class Perkuliahan extends BaseController
                         $row[] = $namaLengkap . " " . $badgeKosma;
                     }
 
-                    $row[] = $histori['NIM']   ?? '-';
+                    $row[] = $histori['NIM'] ?? '-';
                     $row[] = $histori['Prodi'] ?? '-';
                     $row[] = $histori['Kelas'] ?? '-';
                     $row[] = $th_angkatan;
@@ -778,7 +779,8 @@ class Perkuliahan extends BaseController
                     return json_encode(array("msg" => "success", "pesan" => "Berhasil memilih kosma"));
                 } else {
                     return json_encode(array("msg" => "error", "pesan" => "Gagal memilih kosma"));
-                };
+                }
+                ;
             }
         }
     }
@@ -861,7 +863,7 @@ class Perkuliahan extends BaseController
         $data['id_mk'] = $id_mk;
 
         $data['templateJudul'] = "Cetak Absensi " . $this->halaman_label;
-        $data['metode']    = 'cetakAbsensiKosong';
+        $data['metode'] = 'cetakAbsensiKosong';
 
         $writer = new PngWriter();
 
@@ -889,33 +891,58 @@ class Perkuliahan extends BaseController
 
         $data['qrcode'] = $result->getDataUri();
 
-
-        $mpdf = new \Mpdf\Mpdf([
-            'mode' => 'utf-8',
-            'format' => 'A4-L',
-            'margin_left' => 30,
-            'margin_right' => 30,
-            'margin_top' => 25,
-            'margin_bottom' => 20,
-        ]);
-
-        //$html = view(session()->get('akun_group_folder')."/akademik/$this->halaman_controller/".$data['metode'],["data" => $data]);
         $html_cover = view(session()->get('akun_group_folder') . "/akademik/$this->halaman_controller/" . $data['metode'] . "/cover", ["data" => $data]);
         $html_absen = view(session()->get('akun_group_folder') . "/akademik/$this->halaman_controller/" . $data['metode'] . "/absen", ["data" => $data]);
         $html_jurnal = view(session()->get('akun_group_folder') . "/akademik/$this->halaman_controller/" . $data['metode'] . "/jurnal", ["data" => $data]);
-        $output = "Absensi_" . $prodi . "_" . $kelas . ".pdf";
+
         $stylesheet = file_get_contents('./assets/mpdfstyletables.css');
-        $mpdf->defaultheaderline = 0;
-        $mpdf->SetHeader("<div style='color: #6495ED;font-size: 6pt;'>" . base_url("akademik/$this->halaman_controller/cetakAbsensiKosong?prodi=") . $prodi . "&kelas=" . $kelas . "&kd_kelas_perkuliahan=" . $kd_kelas_perkuliahan . "</div>");
-        $mpdf->WriteHTML($stylesheet, 1); // The parameter 1 tells that this is css/style only and no body/html/text
-        $mpdf->WriteHTML($html_cover);
-        $mpdf->WriteHTML('<pagebreak margin-left="10mm" margin-right="10mm" margin-top="15mm" margin-bottom="10mm" />');
-        $mpdf->WriteHTML($stylesheet, 1); // The parameter 1 tells that this is css/style only and no body/html/text
-        $mpdf->WriteHTML($html_absen);
-        $mpdf->WriteHTML('<pagebreak orientation="portrait" margin-left="20mm" margin-right="20mm" margin-top="15mm" margin-bottom="30mm" />');
-        $mpdf->WriteHTML($html_jurnal);
-        $this->response->setHeader('Content-Type', 'application/pdf');
-        $mpdf->Output($output, 'I');
+
+        $data['html_preview'] =
+            "<style>$stylesheet</style>" .
+
+            "<div style='color:#6495ED;font-size:6pt'>
+        " . base_url("akademik/$this->halaman_controller/cetakAbsensiKosong?prodi=")
+            . $prodi . "&kelas=" . $kelas . "&kd_kelas_perkuliahan=" . $kd_kelas_perkuliahan . "
+    </div>" .
+
+            $html_cover .
+
+            "<div style='page-break-after:always'></div>" .
+
+            $html_absen .
+
+            "<div style='page-break-after:always'></div>" .
+
+            $html_jurnal;
+
+        return view('preview_pdf_absensi', $data);
+
+        // $mpdf = new \Mpdf\Mpdf([
+        //     'mode' => 'utf-8',
+        //     'format' => 'A4-L',
+        //     'margin_left' => 30,
+        //     'margin_right' => 30,
+        //     'margin_top' => 25,
+        //     'margin_bottom' => 20,
+        // ]);
+
+        // //$html = view(session()->get('akun_group_folder')."/akademik/$this->halaman_controller/".$data['metode'],["data" => $data]);
+        // $html_cover = view(session()->get('akun_group_folder') . "/akademik/$this->halaman_controller/" . $data['metode'] . "/cover", ["data" => $data]);
+        // $html_absen = view(session()->get('akun_group_folder') . "/akademik/$this->halaman_controller/" . $data['metode'] . "/absen", ["data" => $data]);
+        // $html_jurnal = view(session()->get('akun_group_folder') . "/akademik/$this->halaman_controller/" . $data['metode'] . "/jurnal", ["data" => $data]);
+        // $output = "Absensi_" . $prodi . "_" . $kelas . ".pdf";
+        // $stylesheet = file_get_contents('./assets/mpdfstyletables.css');
+        // $mpdf->defaultheaderline = 0;
+        // $mpdf->SetHeader("<div style='color: #6495ED;font-size: 6pt;'>" . base_url("akademik/$this->halaman_controller/cetakAbsensiKosong?prodi=") . $prodi . "&kelas=" . $kelas . "&kd_kelas_perkuliahan=" . $kd_kelas_perkuliahan . "</div>");
+        // $mpdf->WriteHTML($stylesheet, 1); // The parameter 1 tells that this is css/style only and no body/html/text
+        // $mpdf->WriteHTML($html_cover);
+        // $mpdf->WriteHTML('<pagebreak margin-left="10mm" margin-right="10mm" margin-top="15mm" margin-bottom="10mm" />');
+        // $mpdf->WriteHTML($stylesheet, 1); // The parameter 1 tells that this is css/style only and no body/html/text
+        // $mpdf->WriteHTML($html_absen);
+        // $mpdf->WriteHTML('<pagebreak orientation="portrait" margin-left="20mm" margin-right="20mm" margin-top="15mm" margin-bottom="30mm" />');
+        // $mpdf->WriteHTML($html_jurnal);
+        // $this->response->setHeader('Content-Type', 'application/pdf');
+        // $mpdf->Output($output, 'I');
     }
 
     function absensiMhs()
@@ -925,16 +952,16 @@ class Perkuliahan extends BaseController
 
         if ($this->request->getMethod() == "post") {
             $H_Jadwal = getDataRow('mata_kuliah', ['kd_kelas_perkuliahan' => $this->request->getVar('kode_kelas_perkuliahan')], 'kd_kelas_perkuliahan', 'H_Jadwal')['H_Jadwal'];
-            $tanggal    = $this->request->getVar('tanggal');
+            $tanggal = $this->request->getVar('tanggal');
             $kd_kelas_perkuliahan = $this->request->getVar('kode_kelas_perkuliahan');
             $id_his_pdk = $this->request->getVar('id_his_pdk');
-            $id_mk      = $this->request->getVar('id_mk');
-            $kd_kelas   = $this->request->getVar('kode_kelas');
+            $id_mk = $this->request->getVar('id_mk');
+            $kd_kelas = $this->request->getVar('kode_kelas');
             //dd($kd_kelas);
             // if($this->request->getVar('hari') != $H_Jadwal){
             //     return json_encode(array("status"=>true, "msg" => "error", "pesan" => "Maaf, Absensi perkuliahan hanya bisa diinput pada hari ".$H_Jadwal.", sesuai dengan jadwal perkuliahan."));
             // }else{
-            $index      = 0;
+            $index = 0;
             $jmlAbsenTersimpan = 0;
             foreach ($id_his_pdk as $r) {
                 $cekAbsen = $AbsensMhsModel->where(['id_his_pdk' => $r, 'tanggal' => $tanggal, 'kd_kelas_perkuliahan' => $kd_kelas_perkuliahan])->first(); //Cek data absen
@@ -980,7 +1007,7 @@ class Perkuliahan extends BaseController
         $data['templateJudul'] = 'Absensi Kehadiran ' . $this->halaman_label;
         $data['controller'] = $this->halaman_controller;
         $data['aktif_menu'] = $this->halaman_controller;
-        $data['metode']    = 'absensiMhs';
+        $data['metode'] = 'absensiMhs';
 
 
         return view(session()->get('akun_group_folder') . "/akademik/$this->halaman_controller/" . $data['metode'], $data);
@@ -1188,7 +1215,7 @@ class Perkuliahan extends BaseController
         $data['templateJudul'] = $this->halaman_label;
         $data['controller'] = $this->halaman_controller;
         $data['aktif_menu'] = $this->halaman_controller;
-        $data['metode']    = 'tambahJurnal';
+        $data['metode'] = 'tambahJurnal';
 
 
         return view(session()->get('akun_group_folder') . "/akademik/$this->halaman_controller/" . $data['metode'], $data);
@@ -1269,7 +1296,8 @@ class Perkuliahan extends BaseController
                 $row[] = getCount('tb_abs_mhs', ['id_his_pdk' => $list['id_his_pdk'], 'kd_kelas_perkuliahan' => $this->request->getVar('kd_kelas_perkuliahan'), 'status_absen' => 'S'], null, 'status_absen')['status_absen'];
                 $row[] = getCount('tb_abs_mhs', ['id_his_pdk' => $list['id_his_pdk'], 'kd_kelas_perkuliahan' => $this->request->getVar('kd_kelas_perkuliahan'), 'status_absen' => 'I'], null, 'status_absen')['status_absen'];
                 $row[] = getCount('tb_abs_mhs', ['id_his_pdk' => $list['id_his_pdk'], 'kd_kelas_perkuliahan' => $this->request->getVar('kd_kelas_perkuliahan'), 'status_absen' => 'A'], null, 'status_absen')['status_absen'];
-                $row[] = $list['cekal_kuliah'] == 0 ? '<a onclick="cekal(' . "'" . $list['id_ljk'] . "','" . str_replace("'", "`", $nama) . "','cekal_kuliah'" . '); return false;" role="button" data-placement="top" class="btn btn-xs btn-success" title="Klik untuk mencekal">Lolos</a>' : '<a onclick="lolos(' . "'" . $list['id_ljk'] . "','" . str_replace("'", "`", $nama) . "','cekal_kuliah'" . '); return false;" role="button" data-placement="top" class="btn btn-xs btn-danger" title="Klik untuk meloloskan">Cekal</a>';;
+                $row[] = $list['cekal_kuliah'] == 0 ? '<a onclick="cekal(' . "'" . $list['id_ljk'] . "','" . str_replace("'", "`", $nama) . "','cekal_kuliah'" . '); return false;" role="button" data-placement="top" class="btn btn-xs btn-success" title="Klik untuk mencekal">Lolos</a>' : '<a onclick="lolos(' . "'" . $list['id_ljk'] . "','" . str_replace("'", "`", $nama) . "','cekal_kuliah'" . '); return false;" role="button" data-placement="top" class="btn btn-xs btn-danger" title="Klik untuk meloloskan">Cekal</a>';
+                ;
                 $row[] = (!empty($list['ljk_uts']) || !empty($list['artikel_uts'])) ? '<a href="javascript:void(0)" role="button" class="btn btn-xs btn-success" onclick="showLjk(' . "'uts','" . $list['id_ljk'] . "'" . ')">Lihat</a>' : '';
                 $row[] = (!empty($list['ljk']) || !empty($list['artikel'])) ? '<a href="javascript:void(0)" role="button" class="btn btn-xs btn-success" onclick="showLjk(' . "'uas','" . $list['id_ljk'] . "'" . ')">Lihat</a>' : '';
                 $row[] = (!empty($list['tugas'])) ? '<a href="javascript:void(0)" role="button" class="btn btn-xs btn-success" onclick="showLjk(' . "'tugas','" . $list['id_ljk'] . "'" . ')">Lihat</a>' : '';
@@ -1323,7 +1351,7 @@ class Perkuliahan extends BaseController
                 //foreach ($datanilai as $r)
                 //{
                 $Nilai_Akhir = number_format((($Nilai_UTS * 20) + ($Tgs * 30) + ($Uas * 30) + ($perf * 20)) / 100, 2);
-                $grade_nilai =  dataDinamis('grade_nilai');
+                $grade_nilai = dataDinamis('grade_nilai');
                 if ($Nilai_UTS == 0 or $Tgs == 0 or $Uas == 0 or $perf == 0) {
 
                     foreach ($grade_nilai as $s) {
@@ -1392,7 +1420,7 @@ class Perkuliahan extends BaseController
                 //foreach ($datanilai as $r)
                 //{
                 $Nilai_Akhir = number_format((($Uts * 20) + ($Nilai_Tugas * 30) + ($Uas * 30) + ($perf * 20)) / 100, 2);
-                $grade_nilai =  dataDinamis('grade_nilai');
+                $grade_nilai = dataDinamis('grade_nilai');
                 if ($Uts == 0 or $Nilai_Tugas == 0 or $Uas == 0 or $perf == 0) {
 
                     foreach ($grade_nilai as $s) {
@@ -1461,7 +1489,7 @@ class Perkuliahan extends BaseController
                 //foreach ($datanilai as $r)
                 //{
                 $Nilai_Akhir = number_format((($Uts * 20) + ($Tgs * 30) + ($Uas * 30) + ($perf * 20)) / 100, 2);
-                $grade_nilai =  dataDinamis('grade_nilai');
+                $grade_nilai = dataDinamis('grade_nilai');
                 if ($Uts == 0 or $Tgs == 0 or $Uas == 0 or $perf == 0) {
 
                     foreach ($grade_nilai as $s) {
@@ -1530,7 +1558,7 @@ class Perkuliahan extends BaseController
                 //foreach ($datanilai as $r)
                 //{
                 $Nilai_Akhir = number_format((($Uts * 20) + ($Tgs * 30) + ($Uas * 30) + ($perf * 20)) / 100, 2);
-                $grade_nilai =  dataDinamis('grade_nilai');
+                $grade_nilai = dataDinamis('grade_nilai');
                 if ($Uts == 0 or $Tgs == 0 or $Uas == 0 or $perf == 0) {
 
                     foreach ($grade_nilai as $s) {
@@ -1623,7 +1651,7 @@ class Perkuliahan extends BaseController
         $data['templateJudul'] = "Lembar Jawaban";
         $data['controller'] = $this->halaman_controller;
         $data['aktif_menu'] = $this->halaman_controller;
-        $data['metode']    = 'showLjk';
+        $data['metode'] = 'showLjk';
         if ($data['ujian'] == 'tugas') {
             return view(session()->get('akun_group_folder') . "/akademik/$this->halaman_controller/showTugas", $data);
         } else {
@@ -1667,9 +1695,9 @@ class Perkuliahan extends BaseController
             $NilaiModel = new \App\Models\NilaiModel($this->request);
 
             $kd_kelas_perkuliahan = $this->request->getVar('kd_kelas_perkuliahan');
-            $prodi  = $this->request->getVar('prodi');
-            $kelas  = $this->request->getVar('kelas');
-            $ujian  = $this->request->getVar('ujian');
+            $prodi = $this->request->getVar('prodi');
+            $kelas = $this->request->getVar('kelas');
+            $ujian = $this->request->getVar('ujian');
 
             $mk = getDataRow('mata_kuliah', [
                 'kd_kelas_perkuliahan' => $kd_kelas_perkuliahan,
@@ -1713,8 +1741,8 @@ class Perkuliahan extends BaseController
         </div><br>';
 
             $fakultas = ucwords(getDataRow('prodi', ['singkatan' => $mk['Prodi']])['fakultas']);
-            $dosen    = getDataRow('data_dosen', ['Kode' => $mk['Kd_Dosen']]);
-            $tanggal  = date_indo($mk['Tgl_UTS'] . '-' . $mk['Bln_UTS'] . '-' . $mk['Thn_UTS']);
+            $dosen = getDataRow('data_dosen', ['Kode' => $mk['Kd_Dosen']]);
+            $tanggal = date_indo($mk['Tgl_UTS'] . '-' . $mk['Bln_UTS'] . '-' . $mk['Thn_UTS']);
 
             $html .= '
 <table width="100%" border="0" style="font-size:11pt">
@@ -1859,7 +1887,7 @@ class Perkuliahan extends BaseController
                 $kodeDosen = getDataRow('mata_kuliah', ['kd_kelas_perkuliahan' => $this->request->getVar('kd_kelas_perkuliahan')], null, 'Kd_Dosen', '1')['Kd_Dosen'];
                 if ($file->getName()) {
                     $nm_file = $file->getRandomName();
-                    $nmFolder    = str_replace("'", "", getDataRow('data_dosen', ['Kode' => $kodeDosen])['Nama_Dosen']);
+                    $nmFolder = str_replace("'", "", getDataRow('data_dosen', ['Kode' => $kodeDosen])['Nama_Dosen']);
                     $path = 'berkas_dosen/' . $nmFolder;
                     $berkas = $path . '/' . $nm_file;
                     $mime = $file->getClientMimeType();
@@ -1891,7 +1919,7 @@ class Perkuliahan extends BaseController
         $data['templateJudul'] = $this->halaman_label;
         $data['controller'] = $this->halaman_controller;
         $data['aktif_menu'] = $this->halaman_controller;
-        $data['metode']    = 'tambahDokumen';
+        $data['metode'] = 'tambahDokumen';
 
 
         return view(session()->get('akun_group_folder') . "/akademik/$this->halaman_controller/" . $data['metode'], $data);
@@ -1979,7 +2007,7 @@ class Perkuliahan extends BaseController
 
         $data['perkuliahan'] = $this->perkuliahan->where(['kd_kelas_perkuliahan' => $this->request->getVar('kd_kelas_perkuliahan')])->first();
         $data['controller'] = $this->halaman_controller;
-        $data['metode']    = 'listSoal';
+        $data['metode'] = 'listSoal';
 
         return view(session()->get('akun_group_folder') . "/akademik/$this->halaman_controller/" . $data['metode'], $data);
     }
@@ -2032,7 +2060,7 @@ class Perkuliahan extends BaseController
                 $kodeDosen = getDataRow('mata_kuliah', ['kd_kelas_perkuliahan' => $this->request->getVar('kd_kelas_perkuliahan')], null, 'Kd_Dosen', '1')['Kd_Dosen'];
                 if ($file->getName()) {
                     $nm_file = $file->getRandomName();
-                    $nmFolder    = str_replace("'", "", getDataRow('data_dosen', ['Kode' => $kodeDosen])['Nama_Dosen']);
+                    $nmFolder = str_replace("'", "", getDataRow('data_dosen', ['Kode' => $kodeDosen])['Nama_Dosen']);
                     $path = 'berkas_dosen/' . $nmFolder;
                     $berkas = $path . '/' . $nm_file;
                     $mime = $file->getClientMimeType();
@@ -2064,7 +2092,7 @@ class Perkuliahan extends BaseController
         $data['templateJudul'] = $this->halaman_label;
         $data['controller'] = $this->halaman_controller;
         $data['aktif_menu'] = $this->halaman_controller;
-        $data['metode']    = 'lihatSoal';
+        $data['metode'] = 'lihatSoal';
 
 
         return view(session()->get('akun_group_folder') . "/akademik/$this->halaman_controller/" . $data['metode'], $data);
@@ -2195,7 +2223,7 @@ class Perkuliahan extends BaseController
 
         $data['controller'] = $this->halaman_controller;
         $data['aktif_menu'] = $this->halaman_controller;
-        $data['metode']    = 'tambahSoal';
+        $data['metode'] = 'tambahSoal';
 
 
         return view(session()->get('akun_group_folder') . "/akademik/$this->halaman_controller/" . $data['metode'], $data);
